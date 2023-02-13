@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <%- include('partials/style') %>
+</head>
+
+<body>
+    <h1>Welcome Vender</h1>
+
+    
+    <div id="login" class="p-3 ">
+
+        <div class="card col-lg-4 p-2 m-auto">
+            <br>
+            <h1 class="text-center">Login Your Self In</h1>
+            <br>
+            <div class="mb-3 row">
+                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="username" class="form-control" id="login_username">
+                    <div>
+                        <span id='login_username_err' class="error_span"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="login_password">
+                    <div>
+                        <span id='login_password_err' class="error_span"></span>
+                    </div>
+                </div>
+            </div>
+            <div class=" text-center">
+                <span id='login_error_msg' class="error_span"></span>
+            </div>
+            <br>
+            <button id="loginBtn" class="btn btn-dark m-auto">Login</button>
+            <br>
+            <a>or</a>
+            <br>
+            <button id="signuplink" class="btn btn-dark m-auto">Signup</button>
+            <br>
+            <!-- <a id="singuplink">Signup</a> -->
+        </div>
+    </div>
+
+    <div id="signup" class="p-3 " style="display: none;">
+
+        <div class="card col-lg-4 p-2 m-auto">
+            <br>
+            <h1 class="text-center">Be a vender</h1>
+            <br>
+            <div class="mb-3 row">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="signup_email">
+                    <div>
+                        <span id='signup_email_err' class="error_span"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="username" class="form-control" id="signup_username">
+                    <div>
+                        <span id='username_err' class="error_span"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="signup_password">
+                    <div>
+                        <span id='signup_password_err' class="error_span"></span>
+                    </div>
+                </div>
+            </div>
+            <div class=" text-center">
+                <span id='signup_error_msg' class="error_span"></span>
+            </div>
+            <br>
+            <button id="signupBtn" class="btn btn-dark m-auto">Signup</button>
+            <br>
+            <a>or</a>
+            <br>
+            <button id="loginlink" class="btn btn-dark m-auto">Login</button>
+            <br>
+        </div>
+    </div>
+
+</body>
+<script src="/vender/vender.js"></script>
+<%- include('partials/scripting') %>
+
+</html>
