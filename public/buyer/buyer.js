@@ -125,6 +125,7 @@ function fetchfive(){
     })
 }
 
+
 signup.addEventListener("click", function(){
     console.log("Signup triggered")
     load_btn.style.display = "none"
@@ -140,10 +141,12 @@ login.addEventListener("click", function(){
 })
 
 // logout.addEventListener("click", function(){
-//     signupform.style.display = "none"
-//     load_btn.style.display = "none"
-//     product_card_div.style.display = "none"
-//     loginform.style.display = "block"
+
+//     // signupform.style.display = "none"
+//     // load_btn.style.display = "none"
+//     // product_card_div.style.display = "none"
+//     // loginform.style.display = "block"
+
 // })
 
 signupBtn.addEventListener("click", function(){
@@ -154,7 +157,9 @@ signupBtn.addEventListener("click", function(){
     var cridentials = {
         email: email,
         username: username,
-        password: password 
+        password: password,
+        isVerified: false,
+        mailToken: Date.now() 
     };
     console.log(cridentials)
     fetch("/buyersignupform",
@@ -166,8 +171,7 @@ signupBtn.addEventListener("click", function(){
             body: JSON.stringify(cridentials)
         })
         .then(function (res) { return res.json(); })
-        .then(function (data) { console.log(data)}
-        )
+        .then(function (data) { console.log(data)})
 })
 
 loginBtn.addEventListener("click", function(){
@@ -176,7 +180,9 @@ loginBtn.addEventListener("click", function(){
 
     var cridentials = {
         username: username,
-        password: password 
+        password: password,
+        isVerified: false
+
     };
     console.log(cridentials)
     fetch("/buyerloginform",
@@ -207,6 +213,7 @@ var popupitemname = document.getElementById("popupitemname")
 var popupitemdiscription = document.getElementById("popupitemdiscription")
 function showdetails(id){
     console.log("Details clicked")
+    console.log(modal)
     modal.className = "Modal is-visuallyHidden";
     setTimeout(function () {
         // product_card_div.className = "MainContainer is-blurred";

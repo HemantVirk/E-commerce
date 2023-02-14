@@ -3,7 +3,11 @@ const app = express()
 var session = require('express-session')
 const port = 3000
 const fs = require("fs")
+const sendEmail = require("./methods/sendEmail")
 const multer = require("multer")
+const { send } = require('process')
+const checkAuth = require('./middlewares/checkAuth')
+const { Console } = require('console')
 const upload = multer({ dest: 'public/productimg' })
 app.set('view engine','ejs')
 
@@ -20,14 +24,146 @@ app.use(session({
 app.get("/", function(req,res){
     res.render("root")
 })
+app.get("/logout", function(req,res){
+    req.session.destroy()
+    res.redirect("/buyerlogin")
+})
+
+app.route("/changepassword").get(function(req,res){
+
+    res.render('changepassword')
+})
+.post(function(req,res){
+    fs.readFile("./buyerlogindata.json","utf-8", function(err,data){
+        // console.log("yupp")
+        if(data.length > 0){
+            cridentials = JSON.parse(data)
+        }
+        cridentials.forEach(function (cridential) {
+
+            console.log(req.session)
+            if (req.session.acc.username == cridential.username) {
+                console.log(req.body)
+                cridential.password = req.body.newpass
+                var subject = "Password Changed"
+                var text = "Password for your account has been changed"
+                fs.writeFile("./buyerlogindata.json",JSON.stringify(cridentials),function(err){
+                    sendEmail(cridential.email,0,subject,text,function(err){
+                        req.session.is_logged_in = true
+                        req.session.acc.name = req.body.username;
+                        console.log(req.session.acc)
+                        res.redirect("/buyerlogin")
+                    })
+                    // res.end()
+                })
+            }
+        })
+
+        
+        
+    })
+})
 
 app.route('/venderlogin').get((req,res) => {
     res.render('vender')
 })
 
-app.route('/buyerlogin').get((req,res) => {
-    // res.session.buyeracc = "" 
-    res.render('buyer',{name: "Account"})
+app.get('/buyerlogin',checkAuth,(req,res) => {
+    console.log("haha")
+    // if(req.session.is_logged_in && req.session.acc.isVerified){
+    //     console.log("yo")
+    //     res.render('buyer',{name: req.session.acc.username})
+    //     return
+    // }
+    // else if(req.session.is_logged_in && !req.session.acc.isVerified){
+    //     console.log("yoyo")
+    //     res.render('notVerified')
+    //     return
+    // }
+    // // res.session.buyeracc = "" 
+    // if(req.session.acc.username)
+    console.log(req.session)
+    res.render('buyer',{name: req.session.acc.username})
+})
+
+
+app.get("/verifyemail/:token", function(req,res){
+    const { token } = req.params
+    // console.log(token)
+    fs.readFile("./buyerlogindata.json","utf-8", function(err,data){
+        console.log("yupp")
+        if(data.length > 0){
+            cridentials = JSON.parse(data)
+        }
+        cridentials.forEach(function (cridential) {
+            console.log("yupp")
+            if (token == cridential.mailToken) {
+                console.log("yupp")
+                if(req.session.acc){
+                    req.session.acc.isVerified = true
+                    console.log(cridential.isVerified)
+                    cridential.isVerified = true
+                    console.log("mili: " + req.session.acc.inVerified)
+                    fs.writeFile("./buyerlogindata.json",JSON.stringify(cridentials),function(err){
+                        
+                        res.end()
+                    })
+                    res.redirect("/buyerlogin")
+                    
+                }
+                else{
+                    req.session.acc = cridential;
+                    req.session.is_logged_in = true
+                    req.session.acc.isVerified = true
+                    res.redirect("/buyerlogin")
+                }
+            }
+        })
+
+        
+        
+    })
+})
+
+app.get("/forgotverifyemail/:token", function(req,res){
+    const { token } = req.params
+    // console.log(token)
+    fs.readFile("./buyerlogindata.json","utf-8", function(err,data){
+        // console.log("yupp")
+        if(data.length > 0){
+            cridentials = JSON.parse(data)
+        }
+        cridentials.forEach(function (cridential) {
+            
+            if (token == cridential.mailToken) {
+                req.session.acc = cridential
+                console.log("yupp : " + req.session)
+                res.redirect("/changepassword")
+                // console.log("yupp")
+                // if(req.session.acc){
+                //     req.session.acc.isVerified = true
+                //     console.log(cridential.isVerified)
+                //     cridential.isVerified = true
+                //     console.log("mili: " + req.session.acc.inVerified)
+                //     fs.writeFile("./buyerlogindata.json",JSON.stringify(cridentials),function(err){
+                        
+                //         res.end()
+                //     })
+                //     res.redirect("/buyerlogin")
+                    
+                // }
+                // else{
+                //     req.session.acc = cridential;
+                //     req.session.is_logged_in = true
+                //     req.session.acc.isVerified = true
+                //     res.redirect("/buyerlogin")
+                // }
+            }
+        })
+
+        
+        
+    })
 })
 
 // app.get("/buyerlogout", function(req,res){
@@ -109,7 +245,7 @@ app.get("/successvendorlogin", function(req,res){
 })
 
 app.get("/successbuyerlogin", function(req,res){
-    res.render('buyer',{name:req.session.acc});
+    res.render('buyer',{name:req.session.acc.username});
 })
 
 app.post("/product_shelfing",upload.single('product_pic'), function(req,res){
@@ -198,28 +334,39 @@ app.post('/buyersignupform',(req,res)=>{
         else{
             cridentials = JSON.parse(data)
         }
-        console.log(cridentials)
+        // console.log(cridentials)
+        var email;
         cridentials.forEach(function (cridential) {
             
             if (req.body.email === cridential.email) {
+                
+                // req.session.acc = cridential;
+                // console.log(req.session)
                 isAvailable = false;
             }
         })
         if (isAvailable) {
-            console.log("yeh boy")
-            console.log(cridentials)
-            cridentials.push(req.body)
+            console.log("Available")
             // console.log(cridentials)
+            cridentials.push(req.body)
+            // console.log(email)
+            req.session.acc = req.body
+            console.log(req.session.acc)
+            // console.log("email from: " + cridentials.email)
             cridentials = JSON.stringify(cridentials)
+            var subject = "Verify Account"
+            var text = "Click to verify your account"
             fs.writeFile("./buyerlogindata.json",cridentials,"utf8", function (err) {
+                sendEmail(req.body.email,req.body.mailToken,subject,text,function(err){
+                    req.session.is_logged_in = true
+                    // req.session.acc = req.body
+                    req.session.acc.name = req.body.username;
+                    console.log(req.session.acc)
+                    res.redirect("/buyerlogin")
+                })
 
-                res.end()
-
-            })
-            console.log("avalable")
-            // req.session.acc = req.body.username;
-            // req.session.is_logged_in = true
-            // res.redirect("/account")
+            }) 
+            // console.log("avalable")
         } 
         else {
             res.send("<h1 id=\"message\">Already User Exists</h1><a href=\"/\">Back To Home</a>");
@@ -229,7 +376,7 @@ app.post('/buyersignupform',(req,res)=>{
 })
 
 app.post('/buyerloginform',(req,res)=>{
-
+    var x;
     var cridentials;
     fs.readFile("./buyerlogindata.json","utf-8", function(err,data){
         console.log(data)
@@ -243,11 +390,14 @@ app.post('/buyerloginform',(req,res)=>{
         cridentials.forEach(function (cridential) {
             if (req.body.username === cridential.username && req.body.password === cridential.password) {
                 x = 2
-                console.log("welcome")
+                console.log("welcome: " + JSON.stringify(req.body))
                 req.session.is_logged_in = true;
-                req.session.acc = req.body.username;
-                console.log(req.session.acc)
-                res.send(req.body.username)
+                req.session.acc = req.body
+                // req.session.acc.username = req.body.username;
+                req.session.acc.isVerified = cridential.isVerified
+                // console.log(req.session.acc)
+                // res.send(req.body.username)
+                res.end()
                 
                 // res.render('venderhome',{name: req.body.username});
             }
@@ -266,6 +416,44 @@ app.post('/buyerloginform',(req,res)=>{
 				
     })
 })
+
+app.route("/forgotpassword").get(function (req, res) {
+    res.render("forgot")
+})
+    .post(function (req, res) {
+        var x=1
+        fs.readFile("./buyerlogindata.json", "utf-8", function (err, data) {
+            console.log(data)
+            if (data.length === 0) {
+                cridentials = []
+            }
+            else {
+                cridentials = JSON.parse(data)
+            }
+            var subject = "Forgot Password"
+            var text = "Click to update password"
+
+            cridentials.forEach(function (cridential) {
+                if (req.body.email === cridential.email) {
+                    x = 2
+                    console.log("welcome: " + JSON.stringify(req.body))
+                    req.session.acc = cridential
+                
+                    
+                }
+                if(x==2){
+                    console.log("abcdef")
+                    sendEmail(req.body.email,req.session.acc.mailToken,subject,text,function(err){
+                        console.log("abcdef")
+                        res.redirect("/buyerlogin")
+                    })
+                }
+                else{
+                    console.log("Account not found!!")
+                }
+            })
+        })
+    })
 
 app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`)
