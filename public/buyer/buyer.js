@@ -13,8 +13,18 @@ const account = document.getElementById("account")
 const nav_components = document.getElementById("nav_components")
 const pre_add = document.getElementById("pre_add")
 const final_add = document.getElementById("final_add")
+const login_password_error = document.getElementById("login_password_err")
+const login_username_err = document.getElementById("login_username_err")
+const signup_email_err = document.getElementById("signup_email_err")
+const signup_username_err = document.getElementById("signup_username_err")
+const signup_password_err = document.getElementById("signup_password_err")
+const signup_email = document.getElementById("signup_email")
+const signup_username = document.getElementById("signup_username")
+const signup_password = document.getElementById("signup_password")
+
 var load = 0;
 fetchfive()
+login_password
 var popupContent = []
 
 function fetchfive(){
@@ -170,8 +180,47 @@ signupBtn.addEventListener("click", function(){
             },
             body: JSON.stringify(cridentials)
         })
-        .then(function (res) { return res.json(); })
-        .then(function (data) { console.log(data)})
+        .then(function (res) {  return res.text()  })
+        .then(function (data) { 
+            if(data == "email_null"){
+                
+                signup_email_err.innerText = "This Field cant't be empty !!"
+                signup_username_err.innerText = ""
+                signup_password_error.innerText = ""
+            }
+            else if(data == "username_null"){
+                signup_email_err.innerText = ""
+                signup_username_err.innerText = "This Field cant't be empty !!"
+                signup_password_error.innerText = ""
+            }
+            else if(data == "password_null"){
+                console.log("avdakadava")
+                signup_email_err.innerText = ""
+                signup_username_err.innerText = ""
+                signup_password_err.innerText = "This Field cant't be empty !!"
+            }
+            else if(data == "email_exist"){
+                signup_email_err.innerText = "Email Already Exists !!"
+                signup_username_err.innerText = ""
+                signup_password_error.innerText = ""
+            }
+        })
+})
+
+login_username.addEventListener("click",function(){
+    login_username_err.innerText = ""
+})
+login_password.addEventListener("click",function(){
+    login_password_error.innerText = ""
+})
+signup_email.addEventListener("click",function(){
+    signup_email_err.innerText = ""
+})
+signup_username.addEventListener("click",function(){
+    signup_username_err.innerText = ""
+})
+signup_password.addEventListener("click",function(){
+    signup_password_err.innerText = ""
 })
 
 loginBtn.addEventListener("click", function(){
@@ -182,7 +231,6 @@ loginBtn.addEventListener("click", function(){
         username: username,
         password: password,
         isVerified: false
-
     };
     console.log(cridentials)
     fetch("/buyerloginform",
@@ -195,8 +243,23 @@ loginBtn.addEventListener("click", function(){
         })
         .then(function (res) { return res.text() })
         .then(function (data) {
-            if (data != "err") {
-                
+            if(data == "username_null"){
+                login_username_err.innerText = "Username Can't be empty !"
+                login_password_error.innerText = ""
+            }
+            else if(data == "password_null"){
+                login_password_error.innerText = "Password can't be null !"
+                login_username_err.innerText = ""
+            }
+            else if (data == "username_err") {
+                login_username_err.innerText = "Username not found !!"
+                login_password_error.innerText = ""
+            }
+            else if(data == "password_err"){
+                login_password_error.innerText = "Incorrect Password !!"
+                login_username_err.innerText = ""
+            }
+            else{
                 window.location.href = "/successbuyerlogin"
             }
         }

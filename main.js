@@ -8,6 +8,7 @@ const multer = require("multer")
 const { send } = require('process')
 const checkAuth = require('./middlewares/checkAuth')
 const { Console } = require('console')
+const emptyValidation = require('./methods/emptyValidation')
 const upload = multer({ dest: 'public/productimg' })
 app.set('view engine','ejs')
 
@@ -323,7 +324,7 @@ app.post('/vendersignupform',(req,res)=>{
 })
 
 app.post('/buyersignupform',(req,res)=>{
-
+    var x;
     var cridentials;
     fs.readFile("./buyerlogindata.json","utf-8", function(err,data){
         // console.log(data)
@@ -335,48 +336,64 @@ app.post('/buyersignupform',(req,res)=>{
             cridentials = JSON.parse(data)
         }
         // console.log(cridentials)
-        var email;
-        cridentials.forEach(function (cridential) {
-            
-            if (req.body.email === cridential.email) {
+        x = emptyValidation(req.body.email,req.body.username,req.body.password)
+        if(x==0){
+            cridentials.forEach(function (cridential) {
                 
-                // req.session.acc = cridential;
-                // console.log(req.session)
-                isAvailable = false;
-            }
-        })
-        if (isAvailable) {
-            console.log("Available")
-            // console.log(cridentials)
-            cridentials.push(req.body)
-            // console.log(email)
-            req.session.acc = req.body
-            console.log(req.session.acc)
-            // console.log("email from: " + cridentials.email)
-            cridentials = JSON.stringify(cridentials)
-            var subject = "Verify Account"
-            var text = "Click to verify your account"
-            fs.writeFile("./buyerlogindata.json",cridentials,"utf8", function (err) {
-                sendEmail(req.body.email,req.body.mailToken,subject,text,function(err){
-                    req.session.is_logged_in = true
-                    // req.session.acc = req.body
-                    req.session.acc.name = req.body.username;
-                    console.log(req.session.acc)
-                    res.redirect("/buyerlogin")
-                })
+                if (req.body.email === cridential.email) {
+                    
+                    // req.session.acc = cridential;
+                    // console.log(req.session)
+                    isAvailable = false;
+                }
+            })
+            if (isAvailable) {
+                console.log("Available")
+                // console.log(cridentials)
+                cridentials.push(req.body)
+                // console.log(email)
+                req.session.acc = req.body
+                console.log(req.session.acc)
+                // console.log("email from: " + cridentials.email)
+                cridentials = JSON.stringify(cridentials)
+                var subject = "Verify Account"
+                var text = "Click to verify your account"
+                fs.writeFile("./buyerlogindata.json",cridentials,"utf8", function (err) {
+                    sendEmail(req.body.email,req.body.mailToken,subject,text,function(err){
+                        req.session.is_logged_in = true
+                        // req.session.acc = req.body
+                        req.session.acc.name = req.body.username;
+                        console.log(req.session.acc)
+                        res.redirect("/buyerlogin")
+                    })
 
-            }) 
-            // console.log("avalable")
-        } 
-        else {
-            res.send("<h1 id=\"message\">Already User Exists</h1><a href=\"/\">Back To Home</a>");
+                }) 
+                // console.log("avalable")
+            } 
+            else {
+                res.send("email_exist")
+            }
+        }
+        else{
+            
+            if (x == 4) {
+             
+                res.send("username_null")
+            }
+            else if(x==5){
+
+                res.send("password_null")
+            }
+            else if(x == 3){
+                res.send("email_null")
+            }
         }
 				
     })
 })
 
 app.post('/buyerloginform',(req,res)=>{
-    var x;
+    var x=0;
     var cridentials;
     fs.readFile("./buyerlogindata.json","utf-8", function(err,data){
         console.log(data)
@@ -386,34 +403,42 @@ app.post('/buyerloginform',(req,res)=>{
         else{
             cridentials = JSON.parse(data)
         }
-        
-        cridentials.forEach(function (cridential) {
-            if (req.body.username === cridential.username && req.body.password === cridential.password) {
-                x = 2
-                console.log("welcome: " + JSON.stringify(req.body))
-                req.session.is_logged_in = true;
-                req.session.acc = req.body
-                // req.session.acc.username = req.body.username;
-                req.session.acc.isVerified = cridential.isVerified
-                // console.log(req.session.acc)
-                // res.send(req.body.username)
-                res.end()
-                
-                // res.render('venderhome',{name: req.body.username});
+        x = emptyValidation("q",req.body.username,req.body.password)
+        if(x == 0){
+            
+            cridentials.forEach(function (cridential) {
+
+                if (req.body.username === cridential.username && req.body.password === cridential.password) {
+                    x = 2
+                    console.log("welcome: " + JSON.stringify(req.body))
+                    req.session.is_logged_in = true;
+                    req.session.acc = req.body
+                    req.session.acc.isVerified = cridential.isVerified
+                    res.end()
+                }
+                else if(req.body.username === cridential.username && req.body.password != cridential.password){
+                    x = 1
+                }
+            })
+            if (x === 1) {
+                res.send("password_err")
             }
-            else if(req.body.username === cridential.username && req.body.password != cridential.password){
-                x = 1
+            else if(x==0){
+               
+                res.send("username_err")
             }
-        })
-        if (x === 1) {
-            // res.send("  <h1 id=\"message\">Wrong password</h1><a href=\"/\">Back To Home</a>");
-            console.log("Wrong password")
         }
-        else if(x===0){
-            // res.send("  <h1 id=\"message\">Username not found</h1><a href=\"/\">Back To Home</a>");
-            console.log("No Such Username found !!")
-        }
-				
+        else{
+            
+            if (x == 4) {
+             
+                res.send("username_null")
+            }
+            else if(x==5){
+
+                res.send("password_null")
+            }
+        }	
     })
 })
 
