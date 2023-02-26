@@ -4,17 +4,24 @@
 }
 .container{
     display: flex;
-    height: 100vh;
+    height: 100%;
+    background-image: url("https://wallpapercave.com/wp/wp3487132.jpg");
+    background-position: center;
+    object-fit: cover;  
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-width:100%; 
+    margin: 0;
+    padding: 0;
 }
 
 .leftwing{
-    height: 100vh;
+    min-height: 100vh;
     width: 70%;
     background-position: center;
     margin: auto;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("https://images.unsplash.com/photo-1602147259257-f15bf74711ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGFudGlxdWVzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");
 }
 
 .rightwing{
@@ -23,5 +30,54 @@
     flex-direction: column;
     justify-content: space-around;
     width: 30%;
-    background-color: beige;
+    /* background-color: beige; */
 }
+
+.vendor{
+    width: 60%;
+    height: 20%;
+    background-color: #FFC107;
+    text-align: center;
+    border: none;
+    border-radius: 5%;
+    font-size: xx-large;
+    color: aliceblue;
+}
+button{
+    margin: auto;
+}
+.buyer{
+    width: 60%;
+    height: 20%;
+    background-color: #FFC107;
+    text-align: center;
+    border: none;
+    border-radius: 5%;
+    font-size: xx-large;
+    color: aliceblue;
+}
+
+h1 {
+    /* color: #F0E68C;  */
+    color: #2C3E50; /* dark blue text color to contrast with light yellow background */
+        text-align: center; /* center the title */
+        font-size: 5em; /* larger font size */
+        margin: 0; /* remove margin to avoid extra spacing */
+        text-shadow: 2px 2px #F5D76E;
+        padding-bottom: 5%;
+}
+#title-container {
+    background-color: #F5D76E; /* light yellow background color for container */
+    border-radius: 1em; /* rounded corners for container */
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.25); /* subtle box shadow for container */
+    padding: 1em; /* add some padding to the container */
+    margin: 2em auto; /* center the container and add some spacing around it */
+    max-width: 90%; /* set a maximum width for the container */
+    max-height: 90vh;
+}
+
+  p {
+    font-size: 1.5em; /* larger font size for paragraph text */
+    line-height: 1.5; /* increase line height for easier reading */
+    text-align: center; /* center paragraph text */
+  }

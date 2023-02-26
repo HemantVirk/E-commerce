@@ -2,129 +2,191 @@
 
 <head>
     <%- include('partials/style') %>
-    <link href="/buyer/buyer.css" rel="stylesheet">
+        <link href="/buyer/buyer.css" rel="stylesheet">
 </head>
 
-<body style="background-color: rgb(238,238,238);" >
-    
-    <% if(name != "Account"){ %>
-       <%- include('partials/logoutheader'),{name: name}; %>
-      <% } else{ %>  
-        <%- include('partials/loginheader')%>
-     <% } %>
+<body style="background-color: rgb(238,238,238);">
+
+    <% if(name !="Account" ){ %>
+        <%- include('partials/logoutheader'),{name: name}; %>
+            <% } else{ %>
+                <%- include('partials/loginheader')%>
+                    <% } %>
 
 
-    <div id="container" style="background-color: rgb(238,238,238);">
-    
-        <div id="myModal" class="Modal is-hidden is-visuallyHidden">
-            <!-- Modal content -->
-            <div class="Modal-content">
-                <span id="closeModal" class="Close">&times;</span>
-                <!-- <p>Simple Modal</p> -->
-                <div id="popupProduct">
-                    <img id="popupPicture" />
-                    <div id="popupinfo">
-                        <h1 id="popupitemname"></h1>
-                        <p id="popupitemdiscription"></p>
-                    </div>
-                    <div>
-                        <h2 id="popupitemprice"></h2>
-                        <h3 style="color: rgb(41,168,85);">Free shipping</h3>
-                        <button id="popupaddtolist">Add to wishlist</button>
-                    </div>
-                </div>
+                        <div id="container" style="background-color: rgb(245,215,110); text-align: center;">
+
+                            <div id="myModal"  class="Modal is-hidden is-visuallyHidden">
+                                <!-- Modal content -->
+                                <div class="Modal-content" style="text-align: left;">
+                                    <span id="closeModal" class="Close">&times;</span>
+                                    <!-- <p>Simple Modal</p> -->
+                                    <div id="popupProduct" >
+                                        <img id="popupPicture" style="margin-right: 2px;"/>
+                                        <div id="popupinfo" style="max-width: 40%;">
+                                            <h2 id="popupitemname"></h2>
+                                            <p id="popupitemdiscription"></p>
+                                        </div>
+                                        <div>
+                                            <h2 id="popupitemprice"></h2>
+                                            <h3 style="color: rgb(41,168,85);">Free shipping</h3>
+                                            <button id="popupaddtolist">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="product_card_div" class="pro"
+                                style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgb(245,215,110); min-height: 100vh; height: fit-content; text-align: start;">
+
+
+                            </div>
+                            <button id="load_btn" onclick="fetchfive()"
+                                style="margin-top: 10%; width: 30%; height: 5%; margin-bottom: 5%; background-color: rgb(33,37,41); color: rgb(255,255,255); border-radius: 10px; border:2px solid white;">Load
+                                More</button>
+
+                            <div id="loginform" class="p-3 " style="display: none; margin-top: 10%; min-width: 90%;">
+
+                                <div class="card col-lg-4 p-2 m-auto">
+                                    <br>
+                                    <h1 class="text-center">Login Yourself </h1>
+                                    <br>
+                                    <div class="mb-3 row">
+                                        <label for="username" class="col-sm-2 col-form-label"
+                                            style="width: fit-content;">Enter Email</label>
+                                        <div class="col-sm-10">
+                                            <input type="username" class="form-control" id="login_email">
+                                            <div>
+                                                <span id='login_email_err' class="error_span"
+                                                    style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="password" class="col-sm-2 col-form-label"
+                                            style="width: fit-content;">Password</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="login_password">
+                                            <div>
+                                                <span id='login_password_err' class="error_span"
+                                                    style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" text-center">
+                                        <span id='login_error_msg' class="error_span"></span>
+                                    </div>
+                                    <br>
+                                    <button id="loginBtn_buyer" class="btn btn-dark m-auto">Login</button>
+                                    <br>
+                                    <a href="/forgotpassword">forgot password</a>
+                                    or
+                                    <a href="/buyerlogin">Go Back</a>
+                                    <!-- <div style="display: flex; flex-direction: row; width: 30%; justify-content: center;">
+                            <a href="/buyerlogin"style="margin-left: 45%;">Forgot password</a>
+                            or
+                            <a href="/buyerlogin"style="margin-left: 45%;">Go Back</a>
+                        </div> -->
+                                </div>
+                            </div>
+
+                            <div id="signupform" class="p-3 " style="display: none; margin-top: 10%;">
+
+                                <div class="card col-lg-4 p-2 m-auto">
+                                    <br>
+                                    <h1 class="text-center">Be our customer</h1>
+                                    <br>
+                                    <div class="mb-3 row">
+                                        <label for="email" class="col-sm-2 col-form-label"
+                                            style="width: fit-content;">Enter email</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="signup_email">
+                                            <div>
+                                                <span id='signup_email_err' class="error_span"
+                                                    style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="username" class="col-sm-2 col-form-label"
+                                            style="width: fit-content;">Enter Username</label>
+                                        <div class="col-sm-10">
+                                            <input type="username" class="form-control" id="signup_username">
+                                            <div>
+                                                <span id='signup_username_err' class="error_span"
+                                                    style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="username" class="col-sm-2 col-form-label"
+                                            style="width: fit-content;">Phone number</label>
+                                        <div class="col-sm-10">
+                                            <input type="username" class="form-control" id="signup_phone">
+                                            <div>
+                                                <span id='signup_phone_err' class="error_span"
+                                                    style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="password" class="col-sm-2 col-form-label"
+                                            style="width: fit-content;">Password</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="signup_password">
+                                            <div>
+                                                <span id='signup_password_err' class="error_span"
+                                                    style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" text-center">
+                                        <span id='signup_error_msg' class="error_span"></span>
+                                    </div>
+                                    <br>
+                                    <button id="signupBtn" class="btn btn-dark m-auto">Signup</button>
+                                    <br>
+                                    <a href="/buyerlogin">Go Back</a>
+                                </div>
+                            </div>
+                        </div>
+
+    <footer style="background-color: RGB(33, 37, 41); color: #fff; padding: 40px;">
+    <div>
+        <div class="row">
+            <div class="col-md-3 col-sm-12">
+                <h5>About Us</h5>
+                <p>We are an e-commerce antique store offering unique and rare antique items from all around the world.</p>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <h5>Contact Us</h5>
+                <ul>
+                    <li><i class="fa fa-map-marker"></i>123 Main Street, Anytown USA</li>
+                    <li><i class="fa fa-phone"></i>(123) 456-7890</li>
+                    <li><i class="fa fa-envelope"></i>info@antiques.com</li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <h5>Customer Service</h5>
+                <ul>
+                    <li><a href="#">Shipping &amp; Returns</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <h5>Connect With Us</h5>
+                <ul>
+                    <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                </ul>
             </div>
         </div>
-    <div id="product_card_div" class="pro" style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgb(238,238,238); min-height: 100vh; height: fit-content; ">
-        
-        
+        <hr>
+        <p>&copy; 2023 Antique Store. All Rights Reserved.</p>
     </div>
-    <button id="load_btn" onclick="fetchfive()" style="margin-top: 30%; width: 10%; height: 10%;">load</button>
-    
-    <div id="loginform" class="p-3 " style="display: none; margin-top: 10%; min-width: 90%;">
-
-        <div class="card col-lg-4 p-2 m-auto">
-            <br>
-            <h1 class="text-center">Login Yourself </h1>
-            <br>
-            <div class="mb-3 row">
-                <label for="username" class="col-sm-2 col-form-label" style="width: fit-content;">Username</label>
-                <div class="col-sm-10">
-                    <input type="username" class="form-control" id="login_username">
-                    <div>
-                        <span id='login_username_err' class="error_span" style="color: red;"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="password" class="col-sm-2 col-form-label" style="width: fit-content;">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="login_password">
-                    <div>
-                        <span id='login_password_err' class="error_span" style="color: red;"></span>
-                    </div>
-                </div>
-            </div>
-            <div class=" text-center">
-                <span id='login_error_msg' class="error_span"></span>
-            </div>
-            <br>
-            <button id="loginBtn" class="btn btn-dark m-auto">Login</button>
-            <br>
-            <a href="/forgotpassword"style="margin-left: 45%;">forgot password</a>
-                <!-- or -->
-            <a href="/buyerlogin"style="margin-left: 45%;">Go Back</a>
-            <!-- <div style="display: flex; flex-direction: row; width: 30%; justify-content: center;">
-                <a href="/buyerlogin"style="margin-left: 45%;">Forgot password</a>
-                or
-                <a href="/buyerlogin"style="margin-left: 45%;">Go Back</a>
-            </div> -->
-         </div>
-    </div>
-
-    <div id="signupform" class="p-3 " style="display: none; margin-top: 10%;">
-
-        <div class="card col-lg-4 p-2 m-auto">
-            <br>
-            <h1 class="text-center">Be a vender</h1>
-            <br>
-            <div class="mb-3 row">
-                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="signup_email">
-                    <div>
-                        <span id='signup_email_err' class="error_span" style="color: red;"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="username" class="col-sm-2 col-form-label">Username</label>
-                <div class="col-sm-10">
-                    <input type="username" class="form-control" id="signup_username">
-                    <div>
-                        <span id='signup_username_err' class="error_span" style="color: red;"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="password" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="signup_password">
-                    <div>
-                        <span id='signup_password_err' class="error_span" style="color: red;"></span>
-                    </div>
-                </div>
-            </div>
-            <div class=" text-center">
-                <span id='signup_error_msg' class="error_span"></span>
-            </div>
-            <br>
-            <button id="signupBtn" class="btn btn-dark m-auto">Signup</button>
-            <br>
-            <a href="/buyerlogin"style="margin-left: 45%;">Go Back</a>
-        </div> 
-     </div> 
-    </div>
+</footer> 
 </body>
 <script src="/buyer/buyer.js"></script>
 <%- include('partials/scripting') %>

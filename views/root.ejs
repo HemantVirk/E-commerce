@@ -1,25 +1,154 @@
 <html>
-    <head>
-        <%- include('partials/style') %>
-        <link href="/root/root.css" rel="stylesheet" >
-    </head>
-    <body>
-        <div class="container">
-            <div class="leftwing">
 
+<head>
+    <%- include('partials/style') %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <link href="/root/root.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="leftwing">
+            <div id="title-container">
+                <h1>Antiquites.com</h1>
+                <p>Welcome to Antiquites.com, your online destination for unique and high-quality antiques. Browse our
+                    extensive collection of vintage furniture, decorative items, and more, all carefully curated by our
+                    team of experts. Whether you're a seasoned collector or just starting out, we have something for
+                    everyone. Explore our website and discover the beauty and history of our carefully selected
+                    antiques.</p>
+                    <div id="myCarousel" data-interval="3000" class="carousel slide" data-ride="carousel" >
+
+                       
+                         <ol class="carousel-indicators">
+                          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                          <li data-target="#myCarousel" data-slide-to="1"></li>
+                          <li data-target="#myCarousel" data-slide-to="2"></li>
+                          <li data-target="#myCarousel" data-slide-to="3"></li>
+                          <li data-target="#myCarousel" data-slide-to="4"></li>
+                        </ol>
+                      
+                        
+                        <div class="carousel-inner" style="background-color: rgb(184,134,11)" >
+                      
+                          
+                          <div class="carousel-item active"  >
+                            <div class="card" style=" max-height: 40%; min-height: 40%; display: flex; flex-direction: row; padding: 2%; background-color: rgb(184,134,11); ">
+                              <img id="crouselImg1" height="250px" width="100px" style="max-width: 30%; max-height: 90%; min-width: 30%; min-height: 90%;" class="card-img-top" alt="Card 1 Image">
+                              <div class="card-body" style="max-width: 300px; max-height: 250px; min-width: 300px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h5 id="crouselh1" class="card-title">Card 1 Title</h5>
+                                <!-- <p id="crouselp1"  class="card-text">This is the first card.</p> -->
+                              </div>
+                            </div>
+                          </div>
+                      
+                          
+                         <div class="carousel-item "  >
+                            <div class="card" style="border-color :rgb(184,134,11) ; max-height: 40%; min-height: 40%; display: flex; flex-direction: row; padding: 2%; background-color: rgb(184,134,11);">
+                              <img id="crouselImg2" height="250px" width="100px"  style="max-width: 30%; max-height: 90%; min-width: 30%; min-height: 90%;" class="card-img-top" alt="Card 2 Image">
+                              <div class="card-body" style="max-width: 300px; max-height: 250px; min-width: 300px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h5 id="crouselh2" class="card-title">Card 2 Title</h5>
+                                <!-- <p id="crouselp2" class="card-text">This is the second card.</p> -->
+                              </div>
+                            </div>
+                          </div>
+                      
+                        
+                           <div class="carousel-item"  >
+                            <div class="card" style=" max-height: 40%; min-height: 40%; display: flex; flex-direction: row; padding: 2%; background-color: rgb(184,134,11);">
+                              <img id="crouselImg3" height="250px" width="100px"  style="max-width: 30%; max-height: 90%; min-width: 30%; min-height: 90%;" class="card-img-top" alt="Card 3 Image">
+                              <div class="card-body" style="max-width: 300px; max-height: 250px; min-width: 300px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h5 id="crouselh3" class="card-title">Card 3 Title</h5>
+                                <!-- <p id="crouselp3" class="card-text">This is the third card.</p> -->
+                              </div>
+                            </div>
+                          </div>
+                      
+                          
+                          <div class="carousel-item"  >
+                            <div class="card" style=" max-height: 40%; min-height: 40%; display: flex; flex-direction: row; padding: 2%; background-color: rgb(184,134,11);">
+                              <img id="crouselImg4" height="250px" width="100px" style="max-width: 30%; max-height: 90%; min-width: 30%; min-height: 90%;" class="card-img-top" alt="Card 4 Image">
+                              <div class="card-body" style="max-width: 300px; max-height: 250px; min-width: 300px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h5 id="crouselh4" class="card-title">Card 4 Title</h5>
+                                <!-- <p id="crouselp4" class="card-text">This is the fourth card.</p> -->
+                              </div>
+                            </div>
+                          </div>
+                      
+                          
+                          <div class="carousel-item"  >
+                            <div class="card" style="border-color :rgb(184,134,11); max-height: 40%; min-height: 40%; display: flex; flex-direction: row; padding: 2%; background-color: rgb(184,134,11);">
+                              <img id="crouselImg5" height="250px" width="100px"  style="max-width: 30%; max-height: 90%; min-width: 30%; min-height: 90%;"  class="card-img-top" alt="Card 5 Image">
+                              <div class="card-body" style="max-width: 300px; max-height: 250px; min-width: 300px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h5 id="crouselh5" class="card-title">Card 5 Title</h5>
+                                <!-- <p id="crouselp5" class="card-text">This is the fifth card.</p> -->
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                      
             </div>
-            
-            <div class="rightwing">
-                <a href="/venderlogin">
-                    <button type="button" class="btn btn-primary btn-lg">Vendor</button>
-                </a>
-                <a href="/buyerlogin">
-                    
-                    <button id="buyer" type="button" class="btn btn-primary btn-lg">Buyer</button>
-                </a>
-            </div>
+
         </div>
-    </body>
-    <%- include('partials/scripting') %>
+
+        <div class="rightwing">
+            <a href="/venderlogin" class="vendor"
+                style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                <button type="button" class="vendor">Vendor</button>
+            </a>
+            <a href="/buyerlogin" class="buyer"
+                style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
+
+                <button class="buyer" type="button">Buyer</button>
+            </a>
+        </div>
+    </div>
+    <footer style="background-color: RGB(33, 37, 41); color: #fff; padding: 20px; max-height: fit-content;">
+        <div>
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <h5>About Us</h5>
+                    <p style="text-align: justify; ">We are an e-commerce antique store offering unique and rare antique
+                        items from all around the
+                        world.</p>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><i class="fa fa-map-marker"></i>123 Main Street, Anytown USA</li>
+                        <li><i class="fa fa-phone"></i>(123) 456-7890</li>
+                        <li><i class="fa fa-envelope"></i>info@antiques.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <h5>Customer Service</h5>
+                    <ul>
+                        <li><a href="#">Shipping &amp; Returns</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <h5>Connect With Us</h5>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p>&copy; 2023 Antique Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+<%- include('partials/scripting') %>
     <script src="/root/root.js"></script>
-</html> 
+
+</html>
