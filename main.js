@@ -7,10 +7,10 @@ const fs = require("fs")
 const connect = require("./methods/connect")
 const sendEmail = require("./methods/sendEmail")
 const plusminus = require("./methods/plusminus")
-// const readBuyerDb = require("./methods/readBuyerDb")
-// const writeBuyerDb = require("./methods/writeBuyerDb")
-// const readVendorDb = require("./methods/readVendorDb")
-// const writeVenderDb = require("./methods/writeVendorDb")
+const fetchquantity = require("./methods/fetchquantity")
+const fetchshelf = require("./methods/fetchshelf")
+const fetchtoedit = require("./methods/fetchtoedit")
+const addtoorder = require("./methods/addtoorder")
 const addToCart = require("./methods/addingToCart")
 const gettingFromCart = require("./methods/gettingFromCart")
 const verificationUser = require("./methods/verificationUser")
@@ -193,8 +193,9 @@ app.post('/fetchfive', function (req, res) {
 })
 
 app.post("/addingtocart", function (req, res) {
+    
     console.log(req.session.is_logged_in)
-    console.log(req.body.id)
+    console.log(req.session.acc)
     if(!req.session.is_logged_in){
         console.log("khtm")
         res.send("login_404")
@@ -255,6 +256,7 @@ app.post('/venderloginform', (req, res) => {
                         req.session.acc = req.body
                         req.session.acc.username = data.recordset[0].name
                         req.session.acc.isVerified = data.recordset[0].is_verified
+                        req.session.acc.user_id = data.recordset[0].user_id
                         res.send("success")
                     }
                     else {
@@ -291,8 +293,7 @@ app.post('/venderloginform', (req, res) => {
 app.get("/successvendorlogin", function (req, res) {
     console.log(req.session.acc.isVerified)
     console.log("vendor loading")
-    // const urlSearchParams = new URLSearchParams(window.location.search);
-    // const param1 = urlSearchParams.get('param1');
+    
 
     if (req.session.acc.isVerified == 1)
         res.render('venderhome', { name: req.session.acc.username });
@@ -321,7 +322,7 @@ app.post("/product_shelfing", upload.single('product_pic'), function (req, res) 
     console.log(req.body)
     console.log(req.file.filename)
     console.log(req.session.acc.email)
-    productDb(req.body, req.file.filename, req.session.acc.email, connect)
+    productDb(0,req.body, req.file.filename, req.session.acc.email, connect)
         .then(function (data) {
             console.log(data.rowsAffected)
             if (data.rowsAffected[0] == 1) {
@@ -337,6 +338,39 @@ app.post("/product_shelfing", upload.single('product_pic'), function (req, res) 
 
 })
 
+app.post("/product_updating", upload.single('product_pic'), function (req, res) {
+    
+    productDb(1,req.body, req.file.filename, req.session.acc.email, connect)
+        .then(function (data) {
+            console.log(data.rowsAffected)
+            if (data.rowsAffected[0] == 1) {
+                console.log("qwerty")
+                // res.render('venderhome',{name:req.session.acc.username,status:"Item Added"})
+                res.send("Item Added")
+            }
+
+        })
+        .catch((err) => {
+            res.send(err)
+        });
+})
+app.post("/product_remove", function (req, res) {
+    console.log("removing")
+    console.log(req.body)
+    productDb(2,req.body, "", "", connect)
+        .then(function (data) {
+            console.log(data.rowsAffected)
+            if (data.rowsAffected[0] == 1) {
+                console.log("qwerty")
+                // res.render('venderhome',{name:req.session.acc.username,status:"Item Added"})
+                res.send("Item Added")
+            }
+        })
+        .catch((err) => {
+            res.send(err)
+        });
+
+})
 
 app.post('/vendersignupform', (req, res) => {
     var x
@@ -573,7 +607,43 @@ app.route("/forgotpassword").get(function (req, res) {
         })
     })
 
+app.post("/quantity", function(req,res){
 
+    fetchquantity(req.body.id,connect)
+    .then(function(data){
+        res.send(data + "")
+    })
+})
+
+
+app.post("/fetch_shelf", function(req,res){
+    // console.log("qwerty")
+    console.log(req.session.acc)
+    fetchshelf(req.session.acc.user_id,connect)
+    .then(data => {
+        console.log(data.recordset)
+        res.json(data.recordset)
+    })
+})
+
+app.post("/fetchtoedit", function(req,res){
+    console.log("qwerty")
+    // console.log(req.session.acc)
+    fetchtoedit(req.body.id,connect)
+    .then(data => {
+        console.log(data.recordset)
+        res.json(data.recordset)
+    })
+})
+
+app.post("/order", function(req,res){
+    console.log("ordering")
+    addtoorder(req.body.shipping_address,req.session.acc.user_id,connect)
+    .then(data => {
+        console.log(data)
+        // res.json(data.recordset)
+    })
+})
 
 
 

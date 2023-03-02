@@ -1,15 +1,45 @@
 <html>
-    <head>
-        <%- include('partials/style') %>
-    </head>
 
-    <body>
-        <%- include('partials/logoutheader'),{name: name}; %>
-        <div id="container" style="background-color: rgb(238,238,238); text-align: center; display: flex; flex-direction: row; justify-content: space-between;">
-            <div id="product_card_div" class="pro" style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgb(238,238,238); min-height: 100vh; height: fit-content; text-align: start;">
+<head>
+    <%- include('partials/style') %>
+    <link href="/cart/cart.css" rel="stylesheet">
+</head>
+
+<body>
+    <%- include('partials/logoutheader'),{name: name}; %>
+
+        <div id="container"
+            style="background-color: rgb(238,238,238); text-align: center; display: flex; flex-direction: row; justify-content: space-between;">
+            <div id="myModal" style=" display: none; min-width: 70%; max-width: 70%; min-height: 80%; max-height: 80%; background-color: white; position: fixed; margin: 7% 0 0 15%;">
+          
+                <div class="Modal-content" style="text-align: left; width: 100%;">
+                    <div id="popupProduct" style="display: flex; flex-direction: row; height: 90vh; width: 100vh;">
+                        <div id="left" style="height: 100%; width: 100%; display: flex; flex-direction: column; margin-left: 15%;">
+                            <h4 style="margin-left: auto; margin-top: 5%;">Items</h4>
+                        </div>
+                        <!-- <hr style=""> -->
+                        <div id="right" style="height: 100%; width: 100%; display: flex; flex-direction: column; margin-left: 30%;">
+                            <h4 style="margin-left: auto; margin-top: 5%;">Order details</h4>
+                            <div id="addressform" style="width: 100%; border: solid ; border-color: rgb(240,111,16); display: flex; flex-direction: column; padding: 5% 5% 5% 2%; margin-left: 20%; border-radius: 5px;">
+                                <h4>Shipping Address</h2>
+                                <textarea id="address" style="height: 200px; width: 200px; "></textarea>
+                                <h5 id="h5itemcount"></h5>
+                                <h5 id="h5totalamount"></h5>
+                                <button id="confirm_order" style="background-color: rgb(240,111,16); border-radius: 25px;">Proceed To Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="checkout_box" style="right: 0; position: fixed; margin-top: 5%; margin-right: 3%; border-radius: 3% ;display: flex; flex-direction: column; background-color: white; height: 25%; width: 20%;"></div>
-        }
-    </body>
-    <script src="/cart/cart.js"></script>
+            <div id="product_card_div" class="pro"
+                style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgb(238,238,238); min-height: 100vh; height: fit-content; text-align: start;">
+            </div>
+            <div id="checkout_box"
+                style="right: 0; position: fixed; margin-top: 10%; margin-right: 3%; border-radius: 3% ;display: flex; flex-direction: column; background-color: white; height: 25%; width: 20%;">
+            </div>
+        </div>
+</body>
+<script src="/cart/cart.js"></script>
+<%- include('partials/scripting') %>
+
 </html>

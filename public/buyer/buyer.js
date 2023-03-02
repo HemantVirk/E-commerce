@@ -28,6 +28,7 @@ const signup_phone = document.getElementById("signup_phone")
 const signup_phone_err = document.getElementById("signup_phone_err")
 const login_button = document.getElementById("loginBtn_buyer")
 const cart = document.getElementById("cart")
+const newcollection = document.getElementById("newcollection")
 var load = 0;
 var popupContent = []
 fetchfive()
@@ -72,32 +73,62 @@ function fetchfive(){
             // product_card.style.textAlign = "left"
             product_card.style.padding = "3%"
             product_card.style.margin = "5% auto 0% auto"
-            product_card.style.backgroundColor = "white"
-            product_card.style.borderColor = "rgb(33,37,41)"
-            product_card.style.border = "solid"
+            product_card.style.backgroundColor = "rgb(255,255,255)"
+            // product_card.style.borderColor = "rgb(33,37,41)"
+            // product_card.style.border = "solid"
+            product_card.style.borderBottom = "solid"
+            // product_card.style.borderTop = "solid"
+            product_card.style.borderWidth = "2px"
+            product_card.style.borderColor = "rgb(200,200,200)"
             product_card.style.overflow = "hidden"
-            product_card.style.borderRadius = "10px"
+            // product_card.style.borderRadius = "10px"
+            
+            const imgdiv = document.createElement("div")
+            imgdiv.className = "imgdiv"
+            imgdiv.style.minWidth = "10%"
+            imgdiv.style.display = "flex"
+            
+            // imgdiv.style.justifyContent = "space-between"
+            imgdiv.style.flexDirection = "row"
+            imgdiv.style.minHeight = "100%"
+
+            const imgleft = document.createElement("div")
+            imgleft.style.minHeight = "65%"
+            imgleft.style.maxHeight = "65%"
+            imgleft.style.marginLeft = "10%"
+            imgleft.style.marginTop = "5%"
+            imgleft.style.backgroundColor = "rgb(252,241,240)"
+            imgleft.style.minWidth = "20%"
         
             const product_pic = document.createElement("img")
-            product_pic.style.width = "25%"
-            product_pic.style.height = "50%"
+            product_pic.width = "200"
+            product_pic.height = "200"
+            product_pic.style.maxWidth = "200px"
             product_pic.src = "/productimg/" + data[i].picturename
 
             product_pic.style.borderRadius = "2%"
-            product_pic.style.margin = "auto"
+            // product_pic.style.margin = "auto"
+            const imgright = document.createElement("div")
+            imgright.style.minHeight = "65%"
+            imgright.style.maxHeight = "65%"
+            // imgright.style.marginLeft = "10%"
+            imgright.style.marginTop = "5%"
+            imgright.style.backgroundColor = "rgb(252,241,240)"
+            imgright.style.minWidth = "20%"
 
             const product_name_price = document.createElement("div")
             product_name_price.style.display = "flex"
             product_name_price.style.flexDirection = "column"
             product_name_price.style.width = "50%"
-            product_name_price.style.marginLeft = "5%"
+            product_name_price.style.marginLeft = "20%"
             product_name_price.style.height = "70%"
             product_name_price.style.backgroundColor = "white"
 
-            const product_name = document.createElement("h1")
+            const product_name = document.createElement("h2")
             product_name.innerText = data[i].name
 
-            const product_price = document.createElement("h2")
+            const product_price = document.createElement("h4")
+            product_pic.style.color = "grey";
             product_price.innerText = "$ " + data[i].price
 
             const shipping = document.createElement("h3")
@@ -124,14 +155,23 @@ function fetchfive(){
             const details = document.createElement("button")
             details.style.width = "80%"
             details.id = data[i].product_id
+            details.style.backgroundColor = "rgb(240,111,16)"
             details.onclick = function(){showdetails(this.id)}
             details.style.height = "25%"
+            details.style.color = "white"
+            details.style.border = "none"
+            details.style.borderRadius = "25px"
             details.style.marginBottom = "5%"
             details.innerText = "Details"
+            details.style.boxShadow = "2px 2px 5px rgba(240,111,16, 0.9)"
 
             const add_to_list = document.createElement("button")
             add_to_list.style.width = "80%"
             add_to_list.style.height = "25%"
+            add_to_list.style.borderRadius = "25px"
+            add_to_list.style.marginTop = "5px"
+            add_to_list.style.borderColor = "rgb(200,200,200)"
+            add_to_list.style.backgroundColor = "white"
             add_to_list.id = data[i].product_id
             add_to_list.onclick = function(){addToCart(this.id)}
             add_to_list.innerText = "Add To Cart"
@@ -142,7 +182,12 @@ function fetchfive(){
             product_name_price.appendChild(product_price)
             product_name_price.appendChild(shipping)
 
-            product_card.appendChild(product_pic)
+            imgdiv.appendChild(imgleft)
+            imgdiv.appendChild(product_pic)
+            imgdiv.appendChild(imgright)
+
+            product_card.appendChild(imgdiv)
+            // product_card.appendChild(product_pic)
             
             action_div.appendChild(details)
             action_div.appendChild(add_to_list)
@@ -188,11 +233,13 @@ signup.addEventListener("click", function(){
     load_btn.style.display = "none"
     product_card_div.style.display = "none"
     loginform.style.display = "none"
+    newcollection.style.display = "none"
     signupform.style.display = "block"
 })
 login.addEventListener("click", function(){
     signupform.style.display = "none"
     load_btn.style.display = "none"
+    newcollection.style.display = "none"
     product_card_div.style.display = "none"
     loginform.style.display = "block"
 })

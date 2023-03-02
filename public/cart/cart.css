@@ -1,0 +1,18 @@
+.itemarea{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10%;
+    width: 90%;
+    height: 90%;
+}
+.iteminfo{
+    display: flex;
+    margin-left: 5%;
+    flex-direction: column;
+    width: 50%;
+    height: 20%;
+}
+.pic{
+    width: 100px;
+    height: 100px;
+}

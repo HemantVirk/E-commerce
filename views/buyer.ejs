@@ -5,7 +5,7 @@
         <link href="/buyer/buyer.css" rel="stylesheet">
 </head>
 
-<body style="background-color: rgb(238,238,238);">
+<body style="background-color: rgb(255,255,255);">
 
     <% if(name !="Account" ){ %>
         <%- include('partials/logoutheader'),{name: name}; %>
@@ -14,8 +14,12 @@
                     <% } %>
 
 
-                        <div id="container" style="background-color: rgb(245,215,110); text-align: center;">
-
+                        <div id="container" style="background-color: rgb(255,255,255); text-align: center;">
+                            <div class="new-collection">
+                                <hr>
+                                <h2 id="newcollection">New Collection</h2>
+                                <hr>
+                              </div>                              
                             <div id="myModal"  class="Modal is-hidden is-visuallyHidden">
                                 <!-- Modal content -->
                                 <div class="Modal-content" style="text-align: left;">
@@ -36,7 +40,7 @@
                                 </div>
                             </div>
                             <div id="product_card_div" class="pro"
-                                style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgb(245,215,110); min-height: 100vh; height: fit-content; text-align: start;">
+                                style="display: flex; flex-direction: column;  background-color: rgb(255,255,255); min-height: 100vh; height: fit-content; text-align: start;">
 
 
                             </div>
@@ -44,7 +48,7 @@
                                 style="margin-top: 10%; width: 30%; height: 5%; margin-bottom: 5%; background-color: rgb(33,37,41); color: rgb(255,255,255); border-radius: 10px; border:2px solid white;">Load
                                 More</button>
 
-                            <div id="loginform" class="p-3 " style="display: none; margin-top: 10%; min-width: 90%;">
+                            <div id="loginform" class="p-3 " style="display: none; margin-top: 5%; margin-bottom: 10% ; min-width: 90%;">
 
                                 <div class="card col-lg-4 p-2 m-auto">
                                     <br>
@@ -89,7 +93,7 @@
                                 </div>
                             </div>
 
-                            <div id="signupform" class="p-3 " style="display: none; margin-top: 10%;">
+                            <div id="signupform" class="p-3 " style="display: none; margin-top: 2%; margin-bottom: 10% ;">
 
                                 <div class="card col-lg-4 p-2 m-auto">
                                     <br>

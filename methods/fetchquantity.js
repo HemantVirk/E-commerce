@@ -1,18 +1,14 @@
-module.exports = async function fetchproduct(load,connect){
-    console.log("products fetching")
+module.exports = async function fetchproduct(id,connect){
+    
     connect()
-    var load = load
-    var productarr = []
     async function product_fetch() {
         console.log("starting fetching")
         const pool = await connect();
         try {
                 const result = await pool.request()
-                .query(`select * from products where stock > 0 order by product_id offset ${load} rows fetch next 5 rows only`)
-            console.log(result)
-            productarr.push(result.recordset[0])
-            // console.log()
-            return result.recordset
+                .query(`select stock from products where product_id = ${id}`)
+        
+            return result.recordset[0].stock
         } catch (err) {
             console.log('Error executing query:', err);
             throw err; // optionally rethrow the error
