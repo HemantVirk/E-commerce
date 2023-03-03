@@ -337,6 +337,13 @@ confirm_order.addEventListener("click", function(){
             },
             body: JSON.stringify({shipping_address: address.value})
     })
-    .then(data => console.log(data))
+    .then(function (res) {  return res.text()  })
+    .then(data => {
+
+        if(data == 200){
+            window.location.href = "/ordertrack"
+        }
+    }
+    )
 
 })

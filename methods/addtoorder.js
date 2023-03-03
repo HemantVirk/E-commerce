@@ -1,15 +1,3 @@
-// const sql = require('msnodesqlv8');
-
-// var config = {
-//     database: 'antiquites_db',
-//     server: 'DESKTOP-0KG1NTU',
-//     driver: 'msnodesqlv8',
-//     options:{
-//         trustedConnection:true
-//     }
-    
-// };
-
 module.exports = async function addtoorder(address,user_id,connect){
     connect()
     async function add() {
@@ -39,11 +27,9 @@ module.exports = async function addtoorder(address,user_id,connect){
                     }
                     else{
                         
-                        console.log(mangeorderid)
-                        // console.log(mangeorderid.recordset[0].order_id)
-                        // console.log(`insert into orders(user_id,product_id,product_quantity,product_amount,status,address) values(${user_id}, ${result.recordset[i].product_id},${result.recordset[i].quantity},(${result3.recordset[0].price} * ${result.recordset[i].quantity}),0,'${address}')`)
+                        // console.log(mangeorderid)
                         if(mangeorderid.recordset.length == 0){
-                            console.log(`insert into orders(user_id,product_id,product_quantity,product_amount,status,address,order_id) values(${user_id}, ${result.recordset[i].product_id},${result.recordset[i].quantity},${result3.recordset[0].price} * ${result.recordset[i].quantity},0,'${address}',1)`)
+                            // console.log(`insert into orders(user_id,product_id,product_quantity,product_amount,status,address,order_id) values(${user_id}, ${result.recordset[i].product_id},${result.recordset[i].quantity},${result3.recordset[0].price} * ${result.recordset[i].quantity},0,'${address}',1)`)
                             const result4 = await pool.request()
                             .query(`insert into orders(user_id,product_id,product_quantity,product_amount,status,address,order_id) values(${user_id}, ${result.recordset[i].product_id},${result.recordset[i].quantity},${result3.recordset[0].price} * ${result.recordset[i].quantity},0,'${address}',1)`)
                         }
@@ -66,7 +52,6 @@ module.exports = async function addtoorder(address,user_id,connect){
                 const error = await pool.request()
                 .query("rollback transaction")
                 return "404"
-                
             }
         } catch (err) {
             console.log('Error executing query:', err);
@@ -77,10 +62,6 @@ module.exports = async function addtoorder(address,user_id,connect){
             pool.close();
         }
     }
-    
-
     const result = await add();
-    return result;
-    
-    
+    return result; 
 }

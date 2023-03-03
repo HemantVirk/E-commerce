@@ -1,15 +1,13 @@
 <html>
     <head>
-
+        <%- include('partials/style') %>
+        <link href="/orders/orders.css" rel="stylesheet">
     </head>
     <body>
-        <div id="container">
-            <div id="ordersummery">
-
-            </div>
-            <div id="paymentdetails">
-
-            </div>
+        <%-include('partials/orderhead')%>
+        <div id="container" style="padding: 5%; background-color: white;">
+            
         </div>
     </body>
+    <script src="/orders/orders.js"></script>
 </html>

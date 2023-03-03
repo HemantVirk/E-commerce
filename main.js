@@ -15,6 +15,7 @@ const addToCart = require("./methods/addingToCart")
 const gettingFromCart = require("./methods/gettingFromCart")
 const verificationUser = require("./methods/verificationUser")
 const changePasswordDb = require("./methods/changePasswordDb")
+const getorder = require("./methods/getOrders")
 const multer = require("multer")
 const { send } = require('process')
 const checkAuth = require('./middlewares/checkAuth')
@@ -641,10 +642,39 @@ app.post("/order", function(req,res){
     addtoorder(req.body.shipping_address,req.session.acc.user_id,connect)
     .then(data => {
         console.log(data)
+        res.send(data)
         // res.json(data.recordset)
     })
 })
 
+app.get("/ordertrack", function (req, res) {
+    // console.log(req.session.acc.isVerified)
+    if (req.session.is_logged_in)
+        res.render('orders', { name: req.session.acc.username });
+    else {
+        res.render('verify', {
+            message: 'Please verify your account to continue'
+        });
+    }
+})
+
+app.post("/getorders", function (req, res) {
+    // console.log(req.session.acc.isVerified)
+    console.log("typewriter")
+    if (req.session.is_logged_in)
+        getorder(req.session.acc.user_id,connect)
+        .then(data => {
+            console.log(data)
+            res.send(data)
+            // res.json(data.recordset)
+        })
+    
+    else {
+        res.render('verify', {
+            message: 'Please verify your account to continue'
+        });
+    }
+})
 
 
 app.listen(port, () => {

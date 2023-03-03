@@ -1,0 +1,73 @@
+.card{
+    display: flex;
+    flex-direction: row;
+    max-width: 80%;
+    margin-bottom: 3%;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    margin-right: 2%;
+    border-right: 1px solid black;
+}
+.right{
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+}
+.itempic{
+    height: 100px;
+    width: 100px;
+}
+.itemdiv{
+    display: flex;
+    flex-direction: row;
+    padding: 2%;
+}
+.iteminfo{
+    display: flex;
+    flex-direction: column;
+}
+/* .devider{
+    border-left: 1px solid black;
+    height: 100%;
+} */
+.totals{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+.track{
+    width: 80%;
+    margin-top: 5%;
+}
+
+@media (min-width: 1025px) {
+    .h-custom {
+    height: 100vh !important;
+    }
+    }
+    
+    .horizontal-timeline .items {
+    border-top: 2px solid #ddd;
+    }
+    
+    .horizontal-timeline .items .items-list {
+    position: relative;
+    margin-right: 0;
+    }
+    
+    .horizontal-timeline .items .items-list:before {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #ddd;
+    top: 0;
+    margin-top: -5px;
+    }
+    
+    .horizontal-timeline .items .items-list {
+    padding-top: 15px;
+    }
